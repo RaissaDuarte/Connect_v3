@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+
+    <!-- Fontes do google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Concert+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
+
+    <!-- CSS Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/home.css">
+
+</head>
+
+<body>
+    <header class="headerGeneric">
+        <div class="logo_name">
+            <p>TemDTudo</p>
+        </div>
+        <div class="link_pages">
+            <a href="/home" style="text-decoration: underline;">Home</a>
+            <a href="/funcionarios">Gerência</a>
+            <a href="{{url('buscaFunc')}}">Busca</a>
+            <a href="">Venda</a>
+            <a href="{{url('perfil')}}"><img src="/img/user.svg" alt="Icone Perfil Abstrato"></a>
+        </div>
+    </header>
+    <div class="box-quadro_avisos">
+        <div class="d-flex justify-content-between align-items-end">
+            <div class="box-mensagem-avisos">
+                <p style="display: inline;">Editado por: <span
+                        th:text="${quadroAvisos.funcionario.nome}"></span></p>
+                <textarea name="quadroAvisos" id="quadroAvisos" th:text="${quadroAvisos.mensagem}"
+                    placeholder="Deixe aqui um Aviso" readonly></textarea>
+            </div>
+            <a th:href="@{/home/edit/quadroAvisos/{id}(id=${quadroAvisos.id})}" id="btn_up-quadroAvisos"
+                class="btn btn-primary">Atualizar</a>
+        </div>
+    </div>
+
+    <div class="box-quadro-plantao">
+        <div class="d-flex justify-content-between align-items-end">
+            <div class="box-mensagem d-flex justify-content-between align-items-end">
+                <div class="box-mensagem">
+                    <p style="display: inline;">Editado por: <span
+                            th:text="${quadroPlantao.funcionario.nome}"></span></p>
+                    <textarea name="quadroPlantao" id="quadroPlantao" th:text="${quadroPlantao.mensagem}"
+                        placeholder="Deixe aqui um Aviso" readonly></textarea>
+                </div>
+                <div class="btn-atualizar-plantao">
+                    <a th:href="@{/home/edit/quadroPlantao/{id}(id=${quadroPlantao.id})}" id="btn_up-quadroPlantao"
+                        class="btn btn-primary ml-2">Atualizar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
