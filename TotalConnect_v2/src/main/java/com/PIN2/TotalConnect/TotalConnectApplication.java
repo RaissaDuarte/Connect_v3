@@ -11,6 +11,8 @@ public class TotalConnectApplication implements CommandLineRunner{
 		SpringApplication.run(TotalConnectApplication.class, args);
 	}
 
+	//OPA
+
 	@Override
 	public void run(String... args) throws Exception {
 		
