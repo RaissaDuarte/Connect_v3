@@ -1,6 +1,9 @@
 package com.PIN2.TotalConnect.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,10 +40,19 @@ public class ProdutoControler {
         return prodser.alterarProduto(p);
     }
 
-    @DeleteMapping("/delprod/{idProduto}")
-    public ResponseEntity<RespostaModelo> removerProduto(@PathVariable Integer codigo){
-        return prodser.removerProduto(codigo);
+    @DeleteMapping("/delprod/{id_produto}")
+    public ResponseEntity<RespostaModelo> removerProduto(@PathVariable("id_produto") Integer id_produto){
+        return prodser.removerProduto(id_produto);
     }
 
+    @GetMapping("/produtos/{id_produto}")
+    public ResponseEntity<?> buscarProdutoPorId(@PathVariable("id_produto") Integer id_produto) {
+    Optional<Produto> produto = prodser.buscarProdutoPorId(id_produto);
+    if (produto.isPresent()) {
+        return new ResponseEntity<>(produto.get(), HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>("Produto não encontrado", HttpStatus.NOT_FOUND);
+    }
+}
 
 }
