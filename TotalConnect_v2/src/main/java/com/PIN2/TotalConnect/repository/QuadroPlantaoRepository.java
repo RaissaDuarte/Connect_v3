@@ -1,9 +1,9 @@
 package com.PIN2.TotalConnect.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.PIN2.TotalConnect.entity.QuadroPlantao;
 
-public interface QuadroPlantaoRepository extends JpaRepository<QuadroPlantao, Long> {
+public interface QuadroPlantaoRepository extends CrudRepository<QuadroPlantao, Integer> {
     
 }

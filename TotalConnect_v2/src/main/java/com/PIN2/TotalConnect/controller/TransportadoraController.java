@@ -1,67 +1,45 @@
 package com.PIN2.TotalConnect.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.entity.Transportadora;
 import com.PIN2.TotalConnect.service.TransportadoraService;
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:3000")
 public class TransportadoraController {
+    
+    @Autowired
+    private TransportadoraService transpser;
 
-    private TransportadoraService transportadoraService;
-
-    public TransportadoraController(TransportadoraService transportadoraService) {
-        super();
-        this.transportadoraService = transportadoraService;
+    @PostMapping("/cadtransp")
+    public ResponseEntity<?> cadastrar(@RequestBody Transportadora p){
+        return transpser.cadastrarTransportadora(p);
     }
 
     @GetMapping("/transportadoras")
-    public String listTransportadoras(Model model){
-        model.addAttribute("transportadoras", transportadoraService.getAllTransportadoras());
-        return "transportadoras";
-    }
-
-    @GetMapping("/transportadoras/new")
-    public String createTransportadoraForm(Model model){
-        Transportadora transportadora = new Transportadora();
-        model.addAttribute("transportadora", transportadora);
-        return "create_transportadora";
+    public Iterable<Transportadora> listar(){
+        return transpser.listarTodasTransportadoras();
     }
     
-    @PostMapping("/transportadoras")
-    public String saveTransportadora(@ModelAttribute("transportadora") Transportadora transportadora){
-        transportadoraService.saveTransportadora(transportadora);
-        return "redirect:/transportadoras";
+    @PutMapping("/alterartrans")
+    public ResponseEntity<?> alterar(@RequestBody Transportadora p){
+        return transpser.alterarTransportadora(p);
     }
 
-    @GetMapping("/transportadoras/edit/{id}")
-    public String editTransportadoraForm(@PathVariable Long id, Model model){
-        model.addAttribute("transportadora", transportadoraService.getTransportadoraById(id));
-        return "edit_transportadora";
+    @DeleteMapping("/deltransp/{idProduto}")
+    public ResponseEntity<RespostaModelo> removerTransportadora(@PathVariable Integer codigo){
+        return transpser.removerTransportadora(codigo);
     }
 
-    @PostMapping("/transportadoras/{id}")
-    public String updateTransportadora(@PathVariable Long id, @ModelAttribute("transportadora") Transportadora transportadora){
-
-        Transportadora existingTransportadora = transportadoraService.getTransportadoraById(id);
-
-        existingTransportadora.setNome(transportadora.getNome());
-        existingTransportadora.setCidade(transportadora.getCidade());
-        existingTransportadora.setPrecoKM(transportadora.getPrecoKM());
-
-        transportadoraService.updateTransportadora(existingTransportadora);
-
-        return "redirect:/transportadoras";
-    }
-
-    @GetMapping("/transportadoras/{id}")
-    public String deleteTransportadora(@PathVariable Long id){
-        transportadoraService.deleteTransportadora(id);
-        return "redirect:/transportadoras";
-    }
 }

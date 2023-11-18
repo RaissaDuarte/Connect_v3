@@ -1,12 +1,9 @@
 package com.PIN2.TotalConnect.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.QuadroAvisos;
@@ -14,7 +11,8 @@ import com.PIN2.TotalConnect.entity.QuadroPlantao;
 import com.PIN2.TotalConnect.service.QuadroAvisosService;
 import com.PIN2.TotalConnect.service.QuadroPlantaoService;
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:3000")
 public class HomeController {
 
     @Autowired
@@ -30,23 +28,23 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String starterHome(Model model) {
+    public ResponseEntity<Model> starterHome(Model model) {
         QuadroAvisos quadroAvisos = quadroAvisosService.obterQuadroAvisos();
         QuadroPlantao quadroPlantao = quadroPlantaoService.obterQuadroPlantao();
         model.addAttribute("quadroAvisos", quadroAvisos);
         model.addAttribute("quadroPlantao", quadroPlantao);
-        return "home";
+        return ResponseEntity.ok(model);
     }
 
     @GetMapping("/home/edit/quadroAvisos/{id}")
-    public String editQuadroAvisos(@PathVariable Long id, Model model) {
+    public ResponseEntity<Model> editQuadroAvisos(@PathVariable Long id, Model model) {
         model.addAttribute("quadroAvisos", quadroAvisosService.getQuadroAvisosById(id));
-        return "edit_quadroAvisos";
+        return ResponseEntity.ok(model);
     }
 
     @PostMapping("/home/quadroAvisos/{id}")
-    public String updateQuadroAvisos(@PathVariable Long id, @ModelAttribute("quadroAvisos") QuadroAvisos quadroAvisos,
-            @ModelAttribute("funcionario") Funcionario funcionario) {
+    public ResponseEntity<?> updateQuadroAvisos(@PathVariable Long id, @RequestBody QuadroAvisos quadroAvisos,
+                                                @RequestBody Funcionario funcionario) {
 
         QuadroAvisos existingQuadroAvisos = quadroAvisosService.getQuadroAvisosById(id);
 
@@ -55,19 +53,19 @@ public class HomeController {
 
         quadroAvisosService.updateQuadroAvisos(existingQuadroAvisos);
 
-        return "redirect:/home";
+        return ResponseEntity.ok("redirect:/home");
     }
 
     @GetMapping("/home/edit/quadroPlantao/{id}")
-    public String editQuadroPlantao(@PathVariable Long id, Model model) {
+    public ResponseEntity<Model> editQuadroPlantao(@PathVariable Long id, Model model) {
         model.addAttribute("quadroPlantao", quadroPlantaoService.getQuadroPlantaoById(id));
-        return "edit_quadroPlantao";
+        return ResponseEntity.ok(model);
     }
 
     @PostMapping("/home/quadroPlantao/{id}")
-    public String updateQuadroPlantao(@PathVariable Long id,
-            @ModelAttribute("quadroPlantao") QuadroPlantao quadroPlantao,
-            @ModelAttribute("funcionario") Funcionario funcionario) {
+    public ResponseEntity<?> updateQuadroPlantao(@PathVariable Long id,
+                                                 @RequestBody QuadroPlantao quadroPlantao,
+                                                 @RequestBody Funcionario funcionario) {
 
         QuadroPlantao existingQuadroPlantao = quadroPlantaoService.getQuadroPlantaoById(id);
 
@@ -76,7 +74,6 @@ public class HomeController {
 
         quadroPlantaoService.updateQuadroPlantao(existingQuadroPlantao);
 
-        return "redirect:/home";
+        return ResponseEntity.ok("redirect:/home");
     }
-
 }

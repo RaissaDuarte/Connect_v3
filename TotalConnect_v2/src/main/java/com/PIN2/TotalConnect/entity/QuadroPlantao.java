@@ -22,7 +22,7 @@ public class QuadroPlantao {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_funcionario", nullable = false) // Coluna que representa a chave estrangeira
+    @JoinColumn(name = "id_funcionario", nullable = false)
     private Funcionario funcionario;
 
     @Column(name = "mensagem", nullable = false)

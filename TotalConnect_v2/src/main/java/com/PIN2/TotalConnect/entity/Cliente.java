@@ -8,17 +8,21 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
-@Table(name = "tb_transportadora")
+@Table(name = "tb_cliente")
 @Getter
 @Setter
-public class Transportadora {
+public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String nome;
-    private String cidade;
-    private Double precoKM;
+    private String endereco;
+    private String telefone;
+    private String cep;
+    private String cpf_cnpj;
+
 
 }

@@ -1,9 +1,9 @@
 package com.PIN2.TotalConnect.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.PIN2.TotalConnect.entity.QuadroAvisos;
 
-public interface QuadroAvisosRepository extends JpaRepository<QuadroAvisos, Long> {
+public interface QuadroAvisosRepository extends CrudRepository<QuadroAvisos, Integer> {
     
 }

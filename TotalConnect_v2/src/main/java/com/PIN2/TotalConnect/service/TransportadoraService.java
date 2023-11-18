@@ -1,19 +1,47 @@
 package com.PIN2.TotalConnect.service;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.PIN2.TotalConnect.entity.Transportadora;
+import com.PIN2.TotalConnect.entity.RespostaModelo;
+import com.PIN2.TotalConnect.repository.TransportadoraRepository;
 
-public interface TransportadoraService {
-    
-   List<Transportadora> getAllTransportadoras();
+@Service
+public class TransportadoraService {
 
-    Transportadora saveTransportadora(Transportadora transportadora);
+    @Autowired
+    private TransportadoraRepository transportadoraRepository;
 
-    Transportadora getTransportadoraById(Long id);
+    @Autowired
+    private RespostaModelo respostaModelo;
 
-    Transportadora updateTransportadora(Transportadora transportadora);
+    // Listar todas as transportadoras
+    public Iterable<Transportadora> listarTodasTransportadoras() {
+        return transportadoraRepository.findAll();
+    }
 
-    void deleteTransportadora(Long id);
+    // Cadastrar uma nova transportadora
+    public ResponseEntity<?> cadastrarTransportadora(Transportadora transportadora) {
+        if (transportadora.getNome().isEmpty()) {
+            respostaModelo.setMensagem("Campo nome está vazio");
+            return new ResponseEntity<RespostaModelo>(respostaModelo, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<Transportadora>(transportadoraRepository.save(transportadora), HttpStatus.CREATED);
+        }
+    }
 
+    // Alterar informações de uma transportadora
+    public ResponseEntity<?> alterarTransportadora(Transportadora transportadora) {
+        return new ResponseEntity<Transportadora>(transportadoraRepository.save(transportadora), HttpStatus.OK);
+    }
+
+    // Remover uma transportadora
+    public ResponseEntity<RespostaModelo> removerTransportadora(Integer codigo) {
+        transportadoraRepository.deleteById(codigo);
+        respostaModelo.setMensagem("Transportadora removida com sucesso!");
+        return new ResponseEntity<RespostaModelo>(respostaModelo, HttpStatus.OK);
+    }
 }

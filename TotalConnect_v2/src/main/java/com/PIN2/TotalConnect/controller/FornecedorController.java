@@ -1,71 +1,44 @@
 package com.PIN2.TotalConnect.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.PIN2.TotalConnect.entity.Fornecedor;
+import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.FornecedorService;
 
-@Controller
+@RestController
+@CrossOrigin("http://localhost:3000")
 public class FornecedorController {
 
+    @Autowired
     private FornecedorService fornecedorService;
 
-    public FornecedorController(FornecedorService fornecedorService) {
-        super();
-        this.fornecedorService = fornecedorService;
+    @PostMapping("/cadfornec")
+    public ResponseEntity<?> cadastrar(@RequestBody Fornecedor fornecedor) {
+        return fornecedorService.cadastrarFornecedor(fornecedor);
     }
 
     @GetMapping("/fornecedores")
-    public String listFornecedores(Model model) {
-        model.addAttribute("fornecedores", fornecedorService.getAllFornecedores());
-        return "fornecedores";
+    public Iterable<Fornecedor> listar() {
+        return fornecedorService.listarTodosFornecedores();
     }
 
-    @GetMapping("/fornecedores/new")
-    public String createFornecedorForm(Model model) {
-        Fornecedor fornecedor = new Fornecedor();
-        model.addAttribute("fornecedor", fornecedor);
-        return "create_fornecedor";
+    @PutMapping("/alterarfornec")
+    public ResponseEntity<?> alterar(@RequestBody Fornecedor fornecedor) {
+        return fornecedorService.alterarFornecedor(fornecedor);
     }
 
-    @PostMapping("/fornecedores")
-    public String saveFornecedor(@ModelAttribute("fornecedor") Fornecedor Fornecedor) {
-        fornecedorService.saveFornecedor(Fornecedor);
-        return "redirect:/fornecedores";
+    @DeleteMapping("/delfornec/{id}")
+    public ResponseEntity<RespostaModelo> removerFornecedor(@PathVariable Integer id) {
+        return fornecedorService.removerFornecedor(id);
     }
-
-    @GetMapping("/fornecedores/edit/{id}")
-    public String editFornecedorForm(@PathVariable Long id, Model model) {
-        model.addAttribute("fornecedor", fornecedorService.getFornecedorById(id));
-        return "edit_fornecedor";
-    }
-
-    @PostMapping("/fornecedores/{id}")
-    public String updateFornecedor(@PathVariable Long id, @ModelAttribute("fornecedor") Fornecedor fornecedor,
-            Model model) {
-
-        Fornecedor existingFornecedor = fornecedorService.getFornecedorById(id);
-
-        existingFornecedor.setNome(fornecedor.getNome());
-        existingFornecedor.setCnpj(fornecedor.getCnpj());
-        existingFornecedor.setEndereco(fornecedor.getEndereco());
-        existingFornecedor.setCep(fornecedor.getCep());
-        existingFornecedor.setTelefone(fornecedor.getTelefone());
-
-        fornecedorService.updateFornecedor(existingFornecedor);
-
-        return "redirect:/fornecedores";
-    }
-
-    @GetMapping("/fornecedores/{id}")
-    public String deleteFornecedor(@PathVariable Long id) {
-        fornecedorService.deleteFornecedor(id);
-        return "redirect:/fornecedores";
-    }
-
 }
