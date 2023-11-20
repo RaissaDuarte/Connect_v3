@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PIN2.TotalConnect.entity.Cliente;
 import com.PIN2.TotalConnect.entity.Produto;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.ProdutoService;
@@ -34,6 +35,17 @@ public class ProdutoControler {
     public Iterable<Produto> listar(){
         return prodser.listarTodosProd();
     }
+
+    @GetMapping("/produtos/edit/{id}")
+    public ResponseEntity<Produto> obterProdutoPorId(@PathVariable Integer id) {
+        Produto produto = prodser.buscarProdutoPorId(id);
+
+        if (produto != null) {
+            return ResponseEntity.ok(produto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     
     @PutMapping("/alterarprod")
     public ResponseEntity<?> alterar(@RequestBody Produto p){
@@ -44,15 +56,4 @@ public class ProdutoControler {
     public ResponseEntity<RespostaModelo> removerProduto(@PathVariable("id_produto") Integer id_produto){
         return prodser.removerProduto(id_produto);
     }
-
-    @GetMapping("/produtos/{id_produto}")
-    public ResponseEntity<?> buscarProdutoPorId(@PathVariable("id_produto") Integer id_produto) {
-    Optional<Produto> produto = prodser.buscarProdutoPorId(id_produto);
-    if (produto.isPresent()) {
-        return new ResponseEntity<>(produto.get(), HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>("Produto não encontrado", HttpStatus.NOT_FOUND);
-    }
-}
-
 }

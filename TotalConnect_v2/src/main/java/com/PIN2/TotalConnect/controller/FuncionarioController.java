@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PIN2.TotalConnect.entity.Cliente;
 import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.FuncionarioService;
@@ -32,12 +33,23 @@ public class FuncionarioController {
         return funcSer.listarTodosFuncionarios();
     }
 
+    @GetMapping("/funcionarios/edit/{id}")
+    public ResponseEntity<Funcionario> obterFuncionarioPorId(@PathVariable Integer id) {
+        Funcionario funcionario = funcSer.obterFuncionarioPorId(id);
+
+        if (funcionario != null) {
+            return ResponseEntity.ok(funcionario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping("/alterarfunc")
     public ResponseEntity<?> alterar(@RequestBody Funcionario f) {
         return funcSer.alterarFuncionario(f);
     }
 
-    @DeleteMapping("/delfunc/{idFuncionario}")
+    @DeleteMapping("/funcionarios/delete/{idFuncionario}")
     public ResponseEntity<RespostaModelo> removerFuncionario(@PathVariable Integer idFuncionario) {
         return funcSer.removerFuncionario(idFuncionario);
     }

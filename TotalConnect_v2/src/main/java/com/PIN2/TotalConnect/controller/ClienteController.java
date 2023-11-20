@@ -16,7 +16,7 @@ import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.ClienteService;
 
 @RestController
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ClienteController {
 
     @Autowired
@@ -32,12 +32,23 @@ public class ClienteController {
         return clienteService.listarTodosClientes();
     }
 
+    @GetMapping("/clientes/edit/{id}")
+    public ResponseEntity<Cliente> obterClientePorId(@PathVariable Integer id) {
+        Cliente cliente = clienteService.obterClientePorId(id);
+
+        if (cliente != null) {
+            return ResponseEntity.ok(cliente);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PutMapping("/alterarcliente")
     public ResponseEntity<?> alterar(@RequestBody Cliente cliente) {
         return clienteService.alterarCliente(cliente);
     }
 
-    @DeleteMapping("/delcliente/{idCliente}")
+    @DeleteMapping("/clientes/delete/{idCliente}")
     public ResponseEntity<RespostaModelo> removerCliente(@PathVariable Integer idCliente) {
         return clienteService.removerCliente(idCliente);
     }

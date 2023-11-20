@@ -49,34 +49,16 @@ public class ProdutoService {
             return new ResponseEntity<Produto>(prodre.save(p), HttpStatus.OK);
         }
     }
-    //public ResponseEntity<?> alterarProduto(@PathVariable("id_produto") Integer id_produto, @RequestBody Produto novoProduto){
-        
-        //Optional<Produto> produtoExistente = prodre.findById(id_produto);
 
-        // if (produtoExistente.isPresent() && novoProduto != null) {
-        //     Produto produtoAtual = produtoExistente.get();
     
-        //     produtoAtual.setNome(novoProduto.getNome());
-        //     produtoAtual.setPeso(novoProduto.getPeso());
-        //     produtoAtual.setDimensao(novoProduto.getDimensao());
-        //     produtoAtual.setImagem(novoProduto.getImagem());
-        //     produtoAtual.setQuantidade(novoProduto.getQuantidade());
-        //     produtoAtual.setValor(novoProduto.getValor());
-    
-        //     Produto produtoAlterado = prodre.save(produtoAtual);
-        //     return new ResponseEntity<Produto>(produtoAlterado, HttpStatus.OK);
-        // } else {
-        //     return new ResponseEntity<>(Map.of("mensagem", "Produto não encontrado"), HttpStatus.NOT_FOUND);
-        // }}
 
-    //delete
+    public Produto buscarProdutoPorId(Integer id_produto) {
+        return prodre.findById(id_produto).orElse(null);
+    }
+
     public ResponseEntity<RespostaModelo> removerProduto(Integer codigo){
         prodre.deleteById(codigo);
         remo.setMensagem("Produto removido com sucesso!");
         return new ResponseEntity<RespostaModelo>(remo, HttpStatus.OK);
-    }
-
-    public Optional<Produto> buscarProdutoPorId(Integer id_produto) {
-        return prodre.findById(id_produto);
     }
 }

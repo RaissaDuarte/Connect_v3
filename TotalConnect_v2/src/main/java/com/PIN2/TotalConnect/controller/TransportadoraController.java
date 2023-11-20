@@ -37,9 +37,9 @@ public class TransportadoraController {
         return transpser.alterarTransportadora(p);
     }
 
-    @DeleteMapping("/deltransp/{idProduto}")
-    public ResponseEntity<RespostaModelo> removerTransportadora(@PathVariable Integer codigo){
-        return transpser.removerTransportadora(codigo);
+    @DeleteMapping("/transportadoras/delete/{idTransportadora}")
+    public ResponseEntity<RespostaModelo> removerTransportadora(@PathVariable Integer idTransportadora){
+        return transpser.removerTransportadora(idTransportadora);
     }
 
 }

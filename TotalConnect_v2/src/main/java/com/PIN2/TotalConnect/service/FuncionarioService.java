@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.PIN2.TotalConnect.entity.Cliente;
 import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.repository.FuncionarioRepository;
@@ -31,6 +32,10 @@ public class FuncionarioService {
         } else {
             return new ResponseEntity<Funcionario>(funcre.save(f), HttpStatus.CREATED);
         }
+    }
+
+    public Funcionario obterFuncionarioPorId(Integer id) {
+        return funcre.findById(id).orElse(null);
     }
 
     // Alterar informações de um funcionário

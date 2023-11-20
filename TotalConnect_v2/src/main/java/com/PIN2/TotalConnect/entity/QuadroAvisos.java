@@ -19,7 +19,7 @@ public class QuadroAvisos {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     
     @ManyToOne
     @JoinColumn(name = "id_funcionario", nullable = false)

@@ -37,8 +37,8 @@ public class FornecedorController {
         return fornecedorService.alterarFornecedor(fornecedor);
     }
 
-    @DeleteMapping("/delfornec/{id}")
-    public ResponseEntity<RespostaModelo> removerFornecedor(@PathVariable Integer id) {
-        return fornecedorService.removerFornecedor(id);
+    @DeleteMapping("/fornecedores/delete/{idFornecedor}")
+    public ResponseEntity<RespostaModelo> removerFornecedor(@PathVariable Integer idFornecedor) {
+        return fornecedorService.removerFornecedor(idFornecedor);
     }
 }

@@ -1,14 +1,14 @@
-package com.PIN2.TotalConnect.service;
+// package com.PIN2.TotalConnect.service;
 
-import com.PIN2.TotalConnect.entity.QuadroPlantao;
+// import com.PIN2.TotalConnect.entity.QuadroPlantao;
 
-public interface QuadroPlantaoService {
+// public interface QuadroPlantaoService {
     
-    QuadroPlantao obterQuadroPlantao(); 
+//     QuadroPlantao obterQuadroPlantao(); 
 
-    QuadroPlantao updateQuadroPlantao(QuadroPlantao quadroPlantao);
+//     QuadroPlantao updateQuadroPlantao(QuadroPlantao quadroPlantao);
     
-    QuadroPlantao getQuadroPlantaoById(Long id);
+//     QuadroPlantao getQuadroPlantaoById(Long id);
 
-}
+// }
 

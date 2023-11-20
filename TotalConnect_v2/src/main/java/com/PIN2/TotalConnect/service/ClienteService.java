@@ -18,12 +18,10 @@ public class ClienteService {
     @Autowired
     private RespostaModelo respostaModelo;
 
-    // Listar todos os clientes
     public Iterable<Cliente> listarTodosClientes() {
         return clienteRepository.findAll();
     }
 
-    // Cadastrar um novo cliente
     public ResponseEntity<?> cadastrarCliente(Cliente cliente) {
         if (cliente.getNome().equals("")) {
             respostaModelo.setMensagem("Campo nome está vazio");
@@ -33,12 +31,14 @@ public class ClienteService {
         }
     }
 
-    // Alterar informações de um cliente
+    public Cliente obterClientePorId(Integer id) {
+        return clienteRepository.findById(id).orElse(null);
+    }
+
     public ResponseEntity<?> alterarCliente(Cliente cliente) {
         return new ResponseEntity<Cliente>(clienteRepository.save(cliente), HttpStatus.OK);
     }
 
-    // Remover um cliente
     public ResponseEntity<RespostaModelo> removerCliente(Integer id) {
         clienteRepository.deleteById(id);
         respostaModelo.setMensagem("Cliente removido com sucesso!");
