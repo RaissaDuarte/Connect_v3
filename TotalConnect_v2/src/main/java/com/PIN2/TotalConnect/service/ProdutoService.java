@@ -52,8 +52,8 @@ public class ProdutoService {
 
     
 
-    public Produto buscarProdutoPorId(Integer id_produto) {
-        return prodre.findById(id_produto).orElse(null);
+    public Optional<Produto> buscarProdutoPorId(Integer id_produto) {
+        return prodre.findById(id_produto);
     }
 
     public ResponseEntity<RespostaModelo> removerProduto(Integer codigo){
