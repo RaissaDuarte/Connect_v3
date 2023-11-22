@@ -19,7 +19,7 @@ public class Produto {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id_produto;
     private String nome;
     private Double peso;
     private Double dimensao;
