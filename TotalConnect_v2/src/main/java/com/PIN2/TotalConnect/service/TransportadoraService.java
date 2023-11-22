@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.PIN2.TotalConnect.entity.Transportadora;
+import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.repository.TransportadoraRepository;
 
@@ -36,6 +37,10 @@ public class TransportadoraService {
     // Alterar informações de uma transportadora
     public ResponseEntity<?> alterarTransportadora(Transportadora transportadora) {
         return new ResponseEntity<Transportadora>(transportadoraRepository.save(transportadora), HttpStatus.OK);
+    }
+
+    public Transportadora obterTransportadoraPorId(Integer id) {
+        return transportadoraRepository.findById(id).orElse(null);
     }
 
     // Remover uma transportadora

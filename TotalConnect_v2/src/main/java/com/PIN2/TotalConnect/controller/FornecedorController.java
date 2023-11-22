@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PIN2.TotalConnect.entity.Fornecedor;
+import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.FornecedorService;
 
@@ -22,7 +23,7 @@ public class FornecedorController {
     @Autowired
     private FornecedorService fornecedorService;
 
-    @PostMapping("/cadfornec")
+    @PostMapping("/cadastroFornecedor")
     public ResponseEntity<?> cadastrar(@RequestBody Fornecedor fornecedor) {
         return fornecedorService.cadastrarFornecedor(fornecedor);
     }
@@ -30,6 +31,17 @@ public class FornecedorController {
     @GetMapping("/fornecedores")
     public Iterable<Fornecedor> listar() {
         return fornecedorService.listarTodosFornecedores();
+    }
+
+    @GetMapping("/fornecedores/edit/{id}")
+    public ResponseEntity<Fornecedor> obterFuncionarioPorId(@PathVariable Integer id) {
+        Fornecedor fornecedor = fornecedorService.obterFornecedorPorId(id);
+
+        if (fornecedor != null) {
+            return ResponseEntity.ok(fornecedor);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PutMapping("/alterarfornec")

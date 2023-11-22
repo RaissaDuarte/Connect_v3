@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.PIN2.TotalConnect.entity.Cliente;
 import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.repository.FuncionarioRepository;
@@ -19,12 +18,10 @@ public class FuncionarioService {
     @Autowired
     private RespostaModelo remo;
 
-    // Listar todos os funcionários
     public Iterable<Funcionario> listarTodosFuncionarios() {
         return funcre.findAll();
     }
 
-    // Cadastrar um novo funcionário
     public ResponseEntity<?> cadastrarFuncionario(Funcionario f) {
         if (f.getNome().equals("")) {
             remo.setMensagem("Campo nome está vazio");
@@ -38,7 +35,6 @@ public class FuncionarioService {
         return funcre.findById(id).orElse(null);
     }
 
-    // Alterar informações de um funcionário
     public ResponseEntity<?> alterarFuncionario(Funcionario f) {
         return new ResponseEntity<Funcionario>(funcre.save(f), HttpStatus.OK);
     }

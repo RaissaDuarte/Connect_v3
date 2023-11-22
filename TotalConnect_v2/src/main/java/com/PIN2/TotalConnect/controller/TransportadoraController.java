@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.entity.Transportadora;
 import com.PIN2.TotalConnect.service.TransportadoraService;
@@ -22,7 +23,7 @@ public class TransportadoraController {
     @Autowired
     private TransportadoraService transpser;
 
-    @PostMapping("/cadtransp")
+    @PostMapping("/cadastroTransportadora")
     public ResponseEntity<?> cadastrar(@RequestBody Transportadora p){
         return transpser.cadastrarTransportadora(p);
     }
@@ -30,6 +31,17 @@ public class TransportadoraController {
     @GetMapping("/transportadoras")
     public Iterable<Transportadora> listar(){
         return transpser.listarTodasTransportadoras();
+    }
+
+    @GetMapping("/transportadoras/edit/{id}")
+    public ResponseEntity<Transportadora> obterTransportadoraPorId(@PathVariable Integer id) {
+        Transportadora transportadora = transpser.obterTransportadoraPorId(id);
+
+        if (transportadora != null) {
+            return ResponseEntity.ok(transportadora);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     
     @PutMapping("/alterartrans")

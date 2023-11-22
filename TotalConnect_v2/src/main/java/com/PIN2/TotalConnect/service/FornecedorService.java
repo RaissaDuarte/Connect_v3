@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.PIN2.TotalConnect.entity.Fornecedor;
+import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.repository.FornecedorRepository;
 
@@ -29,6 +30,10 @@ public class FornecedorService {
         } else {
             return new ResponseEntity<Fornecedor>(fornecedorRepository.save(fornecedor), HttpStatus.CREATED);
         }
+    }
+
+     public Fornecedor obterFornecedorPorId(Integer id) {
+        return fornecedorRepository.findById(id).orElse(null);
     }
 
     public ResponseEntity<?> alterarFornecedor(Fornecedor fornecedor) {

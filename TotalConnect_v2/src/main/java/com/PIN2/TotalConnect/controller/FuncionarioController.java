@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.PIN2.TotalConnect.entity.Cliente;
 import com.PIN2.TotalConnect.entity.Funcionario;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.FuncionarioService;
@@ -23,7 +22,7 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcSer;
 
-    @PostMapping("/cadfunc")
+    @PostMapping("/cadastroFuncionario")
     public ResponseEntity<?> cadastrar(@RequestBody Funcionario f) {
         return funcSer.cadastrarFuncionario(f);
     }
