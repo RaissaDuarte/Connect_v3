@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.PIN2.TotalConnect.entity.Cliente;
-import com.PIN2.TotalConnect.entity.Produto;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.repository.ClienteRepository;
 

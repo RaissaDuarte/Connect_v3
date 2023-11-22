@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PIN2.TotalConnect.entity.Cliente;
-import com.PIN2.TotalConnect.entity.Produto;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.ClienteService;
 
