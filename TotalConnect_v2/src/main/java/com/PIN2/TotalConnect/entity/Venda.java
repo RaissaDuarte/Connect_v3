@@ -26,8 +26,8 @@ public class Venda {
     private Double desconto;
     private Double valorTotal;
 
-    // @OneToMany
-    // private List<ItemVenda> itensVenda;
+    @OneToMany
+    private List<ItemVenda> itensVenda;
 
 }
 
