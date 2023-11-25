@@ -1,5 +1,7 @@
 package com.PIN2.TotalConnect.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,12 +33,17 @@ public class FuncionarioService {
         }
     }
 
-    public Funcionario obterFuncionarioPorId(Integer id) {
-        return funcre.findById(id).orElse(null);
+    public Optional<Funcionario> obterFuncionarioPorId(Integer id) {
+        return funcre.findById(id);
     }
 
     public ResponseEntity<?> alterarFuncionario(Funcionario f) {
-        return new ResponseEntity<Funcionario>(funcre.save(f), HttpStatus.OK);
+        if(f.getNome().equals("")){
+            remo.setMensagem("Campo nome está vazio");
+            return new ResponseEntity<RespostaModelo>(remo, HttpStatus.BAD_REQUEST);
+        }else{
+            return new ResponseEntity<Funcionario>(funcre.save(f), HttpStatus.OK);
+        }
     }
 
     // Remover um funcionário

@@ -1,6 +1,9 @@
 package com.PIN2.TotalConnect.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,17 +36,16 @@ public class FuncionarioController {
     }
 
     @GetMapping("/funcionarios/edit/{id}")
-    public ResponseEntity<Funcionario> obterFuncionarioPorId(@PathVariable Integer id) {
-        Funcionario funcionario = funcSer.obterFuncionarioPorId(id);
-
-        if (funcionario != null) {
-            return ResponseEntity.ok(funcionario);
+    public ResponseEntity<?> obterFuncionarioPorId(@PathVariable("id") Integer id) {
+        Optional<Funcionario> funcionario = funcSer.obterFuncionarioPorId(id);
+        if (funcionario.isPresent()) {
+            return new ResponseEntity<>(funcionario.get(), HttpStatus.OK);
         } else {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>("Funcionário não encontrado", HttpStatus.NOT_FOUND);
         }
     }
 
-    @PutMapping("/alterarfunc")
+    @PutMapping("/alterarFuncionario")
     public ResponseEntity<?> alterar(@RequestBody Funcionario f) {
         return funcSer.alterarFuncionario(f);
     }

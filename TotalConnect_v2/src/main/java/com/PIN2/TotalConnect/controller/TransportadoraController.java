@@ -43,9 +43,9 @@ public class TransportadoraController {
         }
     }
     
-    @PutMapping("/alterartrans")
-    public ResponseEntity<?> alterar(@RequestBody Transportadora p){
-        return transpser.alterarTransportadora(p);
+    @PutMapping("/alterarTransportadora")
+    public ResponseEntity<?> alterar(@RequestBody Transportadora t){
+        return transpser.alterarTransportadora(t);
     }
 
     @DeleteMapping("/transportadoras/delete/{idTransportadora}")

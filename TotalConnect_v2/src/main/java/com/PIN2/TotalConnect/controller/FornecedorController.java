@@ -43,7 +43,7 @@ public class FornecedorController {
         }
     }
 
-    @PutMapping("/alterarfornec")
+    @PutMapping("/alterarFornecedor")
     public ResponseEntity<?> alterar(@RequestBody Fornecedor fornecedor) {
         return fornecedorService.alterarFornecedor(fornecedor);
     }
