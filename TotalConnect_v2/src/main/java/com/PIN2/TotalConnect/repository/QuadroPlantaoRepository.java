@@ -1,9 +1,10 @@
-// package com.PIN2.TotalConnect.repository;
+package com.PIN2.TotalConnect.repository;
 
-// import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+import com.PIN2.TotalConnect.entity.QuadroPlantao;
 
-// import com.PIN2.TotalConnect.entity.QuadroPlantao;
-
-// public interface QuadroPlantaoRepository extends CrudRepository<QuadroPlantao, Integer> {
+@Repository
+public interface QuadroPlantaoRepository extends CrudRepository<QuadroPlantao, Integer> {
     
-// }
+}
