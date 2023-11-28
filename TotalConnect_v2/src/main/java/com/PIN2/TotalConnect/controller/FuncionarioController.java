@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.PIN2.TotalConnect.entity.Funcionario;
+import com.PIN2.TotalConnect.entity.LoginRequest;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.FuncionarioService;
 
@@ -23,21 +24,43 @@ import com.PIN2.TotalConnect.service.FuncionarioService;
 public class FuncionarioController {
 
     @Autowired
-    private FuncionarioService funcSer;
+    private FuncionarioService funcionarioService;
+@PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            String cpf = loginRequest.getCpf();
+            String senha = loginRequest.getSenha();
+
+            Optional<Funcionario> funcionarioOptional = funcionarioService.login(cpf, senha);
+
+            if (funcionarioOptional.isPresent()) {
+                // Credenciais válidas
+                // Aqui você pode gerar um token JWT ou retornar outras informações necessárias
+                Funcionario funcionario = funcionarioOptional.get();
+                return ResponseEntity.ok(funcionario); // Retorna o Funcionario como JSON
+            } else {
+                // Credenciais inválidas
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            // Trata qualquer exceção inesperada
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
     @PostMapping("/cadastroFuncionario")
     public ResponseEntity<?> cadastrar(@RequestBody Funcionario f) {
-        return funcSer.cadastrarFuncionario(f);
+        return funcionarioService.cadastrarFuncionario(f);
     }
 
     @GetMapping("/funcionarios")
     public Iterable<Funcionario> listar() {
-        return funcSer.listarTodosFuncionarios();
+        return funcionarioService.listarTodosFuncionarios();
     }
 
     @GetMapping("/funcionarios/edit/{id}")
     public ResponseEntity<?> obterFuncionarioPorId(@PathVariable("id") Integer id) {
-        Optional<Funcionario> funcionario = funcSer.obterFuncionarioPorId(id);
+        Optional<Funcionario> funcionario = funcionarioService.obterFuncionarioPorId(id);
         if (funcionario.isPresent()) {
             return new ResponseEntity<>(funcionario.get(), HttpStatus.OK);
         } else {
@@ -47,11 +70,11 @@ public class FuncionarioController {
 
     @PutMapping("/alterarFuncionario")
     public ResponseEntity<?> alterar(@RequestBody Funcionario f) {
-        return funcSer.alterarFuncionario(f);
+        return funcionarioService.alterarFuncionario(f);
     }
 
     @DeleteMapping("/funcionarios/delete/{idFuncionario}")
     public ResponseEntity<RespostaModelo> removerFuncionario(@PathVariable Integer idFuncionario) {
-        return funcSer.removerFuncionario(idFuncionario);
+        return funcionarioService.removerFuncionario(idFuncionario);
     }
 }

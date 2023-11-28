@@ -33,7 +33,7 @@ public class HomeController {
         }
     }
 
-     @GetMapping("/quadroPlantao")
+    @GetMapping("/quadroPlantao")
     public ResponseEntity<?> obterQuadroPlantao() {
 
         Optional<QuadroPlantao> quadroPlantao = homeService.obterQuadroPlantao();

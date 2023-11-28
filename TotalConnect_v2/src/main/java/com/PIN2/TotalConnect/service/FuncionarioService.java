@@ -15,13 +15,23 @@ import com.PIN2.TotalConnect.repository.FuncionarioRepository;
 public class FuncionarioService {
 
     @Autowired
-    private FuncionarioRepository funcre;
+    private FuncionarioRepository funcionarioRepository;
 
     @Autowired
     private RespostaModelo remo;
 
+    public Optional<Funcionario> login(String cpf, String senha) {
+        Optional<Funcionario> funcionarioOptional = funcionarioRepository.findByCpf(cpf);
+
+        if (funcionarioOptional.isPresent() && funcionarioOptional.get().getSenha().equals(senha)) {
+            return funcionarioOptional;
+        }
+
+        return Optional.empty();
+    }
+
     public Iterable<Funcionario> listarTodosFuncionarios() {
-        return funcre.findAll();
+        return funcionarioRepository.findAll();
     }
 
     public ResponseEntity<?> cadastrarFuncionario(Funcionario f) {
@@ -29,12 +39,12 @@ public class FuncionarioService {
             remo.setMensagem("Campo nome está vazio");
             return new ResponseEntity<RespostaModelo>(remo, HttpStatus.BAD_REQUEST);
         } else {
-            return new ResponseEntity<Funcionario>(funcre.save(f), HttpStatus.CREATED);
+            return new ResponseEntity<Funcionario>(funcionarioRepository.save(f), HttpStatus.CREATED);
         }
     }
 
     public Optional<Funcionario> obterFuncionarioPorId(Integer id) {
-        return funcre.findById(id);
+        return funcionarioRepository.findById(id);
     }
 
     public ResponseEntity<?> alterarFuncionario(Funcionario f) {
@@ -42,13 +52,13 @@ public class FuncionarioService {
             remo.setMensagem("Campo nome está vazio");
             return new ResponseEntity<RespostaModelo>(remo, HttpStatus.BAD_REQUEST);
         }else{
-            return new ResponseEntity<Funcionario>(funcre.save(f), HttpStatus.OK);
+            return new ResponseEntity<Funcionario>(funcionarioRepository.save(f), HttpStatus.OK);
         }
     }
 
     // Remover um funcionário
     public ResponseEntity<RespostaModelo> removerFuncionario(Integer id) {
-        funcre.deleteById(id);
+        funcionarioRepository.deleteById(id);
         remo.setMensagem("Funcionário removido com sucesso!");
         return new ResponseEntity<RespostaModelo>(remo, HttpStatus.OK);
     }
