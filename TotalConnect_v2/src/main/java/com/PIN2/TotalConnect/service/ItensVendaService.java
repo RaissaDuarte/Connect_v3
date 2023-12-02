@@ -56,7 +56,7 @@ public class ItensVendaService {
 
             ItemVenda itemParaRemover = null;
             for (ItemVenda item : venda.getItensVenda()) {
-                if (item.getId().equals(idItem)) {
+                if (item.getId_itemVenda().equals(idItem)) {
                     itemParaRemover = item;
                     break;
                 }

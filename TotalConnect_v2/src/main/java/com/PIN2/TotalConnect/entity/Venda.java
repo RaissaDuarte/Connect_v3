@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +23,12 @@ public class Venda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_venda;
+
     private Integer id_cliente;
+    
+    @Column(nullable = true)
     private Double desconto;
+    @Column(nullable = true)
     private Double valorTotal;
 
     @OneToMany

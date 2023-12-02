@@ -1,0 +1,11 @@
+package com.PIN2.TotalConnect.repository;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.PIN2.TotalConnect.entity.ItemVenda;
+
+@Repository
+public interface ItemVendaRepository extends CrudRepository<ItemVenda, Integer>{
+    
+}
