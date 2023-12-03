@@ -36,7 +36,7 @@ public class ItensVendaController {
 
     @GetMapping("/itvenda/{id_venda}")
     public ResponseEntity<?> buscaritVendaPorId(@PathVariable("id_itemVenda") Integer id_itemVenda) {
-    Optional<ItemVenda> itvenda = itvendaService.buscarVendaPorId(id_itemVenda);
+    Optional<ItemVenda> itvenda = itvendaService.buscaritVendaPorId(id_itemVenda);
     if (itvenda.isPresent()) {
         return new ResponseEntity<>(itvenda.get(), HttpStatus.OK);
     } else {

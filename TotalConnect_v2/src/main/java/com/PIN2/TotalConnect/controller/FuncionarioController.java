@@ -49,9 +49,13 @@ public class FuncionarioController {
     }
 
     @PostMapping("/cadastroFuncionario")
-    public ResponseEntity<?> cadastrar(@RequestBody Funcionario f) {
-        return funcionarioService.cadastrarFuncionario(f);
+public ResponseEntity<?> cadastrar(@RequestBody Funcionario f) {
+    if (funcionarioService.verificarCpfExistente(f.getCpf())) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("CPF já cadastrado. Insira um CPF válido.");
     }
+
+    return funcionarioService.cadastrarFuncionario(f);
+}
 
     @GetMapping("/funcionarios")
     public Iterable<Funcionario> listar() {

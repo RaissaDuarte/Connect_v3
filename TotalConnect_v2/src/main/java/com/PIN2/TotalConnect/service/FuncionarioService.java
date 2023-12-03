@@ -30,12 +30,19 @@ public class FuncionarioService {
         return Optional.empty();
     }
 
+    public boolean verificarCpfExistente(String cpf) {
+        return funcionarioRepository.existsByCpf(cpf);
+    }
+
     public Iterable<Funcionario> listarTodosFuncionarios() {
         return funcionarioRepository.findAll();
     }
 
     public ResponseEntity<?> cadastrarFuncionario(Funcionario f) {
-        if (f.getNome().equals("")) {
+        if (verificarCpfExistente(f.getCpf())) {
+            remo.setMensagem("CPF já cadastrado. Insira um CPF válido.");
+            return new ResponseEntity<RespostaModelo>(remo, HttpStatus.BAD_REQUEST);
+        } else if (f.getNome().equals("")) {
             remo.setMensagem("Campo nome está vazio");
             return new ResponseEntity<RespostaModelo>(remo, HttpStatus.BAD_REQUEST);
         } else {
@@ -48,10 +55,10 @@ public class FuncionarioService {
     }
 
     public ResponseEntity<?> alterarFuncionario(Funcionario f) {
-        if(f.getNome().equals("")){
+        if (f.getNome().equals("")) {
             remo.setMensagem("Campo nome está vazio");
             return new ResponseEntity<RespostaModelo>(remo, HttpStatus.BAD_REQUEST);
-        }else{
+        } else {
             return new ResponseEntity<Funcionario>(funcionarioRepository.save(f), HttpStatus.OK);
         }
     }
