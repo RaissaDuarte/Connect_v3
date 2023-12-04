@@ -1,5 +1,6 @@
 package com.PIN2.TotalConnect.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.PIN2.TotalConnect.entity.DTOEntrada;
 import com.PIN2.TotalConnect.entity.Produto;
 import com.PIN2.TotalConnect.entity.RespostaModelo;
 import com.PIN2.TotalConnect.service.ProdutoService;
@@ -54,4 +56,31 @@ public class ProdutoControler {
     public ResponseEntity<RespostaModelo> removerProduto(@PathVariable("id_produto") Integer id_produto){
         return prodser.removerProduto(id_produto);
     }
+
+    @PutMapping("/entradaestoque")
+public ResponseEntity<?> atualizarEntradaEstoque(
+    // @PathVariable("id_produto") Integer id_produto,
+    @RequestBody DTOEntrada atualizacaoEstoque) {
+    Integer id_produto = atualizacaoEstoque.getId_produto();
+    Integer novaQuantidade = atualizacaoEstoque.getQuantidade();
+    Double Valor = atualizacaoEstoque.getValor();
+
+
+    Optional<Produto> produtoOptional = prodser.buscarProdutoPorId(id_produto);
+
+    if (produtoOptional.isPresent()) {
+        Produto produto = produtoOptional.get();
+
+        produto.setQuantidade(produto.getQuantidade() + novaQuantidade);
+        produto.setValor(Valor);
+
+        prodser.alterarProduto(produto);
+        return new ResponseEntity<>(produto, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>("Produto não encontrado", HttpStatus.NOT_FOUND);
+    }
+}
+
+
+
 }

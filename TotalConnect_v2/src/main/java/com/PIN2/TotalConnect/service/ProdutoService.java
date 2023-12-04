@@ -1,6 +1,8 @@
 package com.PIN2.TotalConnect.service;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.DoubleAdder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,4 +60,33 @@ public class ProdutoService {
         remo.setMensagem("Produto removido com sucesso!");
         return new ResponseEntity<RespostaModelo>(remo, HttpStatus.OK);
     }
+
+
+    //entradas 
+    // public ResponseEntity<?> atualizarEntradaEstoque(Integer id_produto, Map<String, Object> camposAtualizados) {
+    //     Optional<Produto> produtoOptional = prodre.findById(id_produto);
+
+    //     if (produtoOptional.isPresent()) {
+    //         Produto produto = produtoOptional.get();
+
+    //         if (camposAtualizados.containsKey("quantidade")) {
+    //             Integer quantidade = (Integer) camposAtualizados.get("quantidade");
+    //             Double novaQuantidade = produto.getQuantidade() + quantidade;
+    //             produto.setQuantidade(novaQuantidade);
+    //         }
+
+    //         if (camposAtualizados.containsKey("valor")) {
+    //             Double valor = (Double) camposAtualizados.get("valor");
+    //             produto.setValor(valor);
+    //         }
+
+    //         return new ResponseEntity<>(prodre.save(produto), HttpStatus.OK);
+    //     } else {
+    //         remo.setMensagem("Produto não encontrado");
+    //         return new ResponseEntity<>(remo, HttpStatus.NOT_FOUND);
+    //     }
+    // }
+
+
+    
 }
